@@ -30,7 +30,7 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UserInfo;
 
-public class Tunnel {
+class Tunnel {
 
   private static final String NO_KERBEROS_AUTH = "publickey,keyboard-interactive,password";
   private static final String SSH_PREFERRED_AUTHENTICATIONS = "PreferredAuthentications";
@@ -64,9 +64,6 @@ public class Tunnel {
   }
 
   public Tunnel start() throws Exception {
-    if (session == null) {
-      connect();
-    }
     for (String s : config.getTunnels()) {
       LocalRemotePortPair ports = new LocalRemotePortPair(s);
       log.trace("Creating Tunnel : localPort {} -> {}:{}", ports.getLocalPort(), "localhost", ports.getRemotePort());
@@ -96,11 +93,11 @@ public class Tunnel {
     return jsch;
   }
 
-  private class HostPortPair {
+  protected static class HostPortPair {
     private String hostname;
     private int port = 22;
 
-    private HostPortPair(String combinedHostPort) {
+    protected HostPortPair(String combinedHostPort) {
       String[] pair = combinedHostPort.split(":");
       hostname = pair[0];
       if (pair.length > 1) {
@@ -108,16 +105,16 @@ public class Tunnel {
       }
     }
 
-    String getHost() {
+    protected String getHost() {
       return hostname;
     }
 
-    int getPort() {
+    protected int getPort() {
       return port;
     }
   }
 
-  private class LocalRemotePortPair {
+  protected static class LocalRemotePortPair {
     private Integer localPort;
     private Integer remotePort;
 
@@ -129,14 +126,14 @@ public class Tunnel {
       }
     }
 
-    int getLocalPort() {
+    protected int getLocalPort() {
       if (localPort != null) {
         return localPort.intValue();
       }
       throw new IllegalArgumentException();
     }
 
-    int getRemotePort() {
+    protected int getRemotePort() {
       if (remotePort != null) {
         return remotePort.intValue();
       }
@@ -144,11 +141,11 @@ public class Tunnel {
     }
   }
 
-  private class StaticPassword implements UserInfo {
+  protected static class StaticPassword implements UserInfo {
 
     private String password;
 
-    private StaticPassword(String pw) {
+    protected StaticPassword(String pw) {
       password = pw;
     }
 
@@ -164,7 +161,7 @@ public class Tunnel {
 
     @Override
     public String getPassphrase() {
-      return "";
+      return null;
     }
 
     @Override
@@ -181,19 +178,5 @@ public class Tunnel {
     public void showMessage(String message) {
       log.trace(message);
     }
-  }
-
-  private static class TraceLogger implements com.jcraft.jsch.Logger {
-
-    @Override
-    public boolean isEnabled(int level) {
-      return true;
-    }
-
-    @Override
-    public void log(int level, String message) {
-      log.trace(message);
-    }
-
   }
 }
