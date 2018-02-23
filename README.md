@@ -24,7 +24,7 @@ sshtunnel.tunnel.hammertime.privateKeyPassword=%env{MY_SECRET_PRIVATEKEY_PASSWOR
 * You connect to 10.1.2.3:22 as the user _trex_. 
 * Your private key is stored in `/path/to/my/privatekey/id_rsa`
 * Your private key password is stored against the environment variable `MY_SECRET_PRIVATEKEY_PASSWORD`
-** If you leave this undefined, then a java null is used as the password.
+    * If you leave this undefined, then a java null is used as the password.
 * A tunnel is opened from the local port 3306 -> 10.1.2.3:3306
 * A tunnel is opened from the local port 2506 -> 10.1.2.3:2506
 
