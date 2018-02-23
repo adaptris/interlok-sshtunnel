@@ -17,7 +17,6 @@ package com.adaptris.management.ssh;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import org.slf4j.Logger;
@@ -29,21 +28,17 @@ import com.adaptris.core.util.PropertyHelper;
 public class SshTunnelComponent implements ManagementComponent {
   private transient Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-  private transient ClassLoader classLoader;
-
-  private transient Map<String, String> config;
   private transient List<TunnelConfig> tunnelConfigs = new ArrayList<>();;
   private transient List<Tunnel> tunnels = new ArrayList<>();
 
   @Override
   public void setClassLoader(ClassLoader classLoader) {
-    this.classLoader = classLoader;
+    // no-op
   }
 
   @Override
   public void init(Properties config) throws Exception {
-    this.config = PropertyHelper.asMap(config);
-    tunnelConfigs = new TunnelConfigBuilder(config).build();
+    tunnelConfigs = new TunnelConfigBuilder(PropertyHelper.asMap(config)).build();
   }
 
   @Override
