@@ -7,7 +7,7 @@ Sometimes, you're trying to access a database to do some selects, but they won't
 
 ## How to configure
 
-It's a management component, so everything is configured in bootstrap.properties where your configuration consists of a number of  `sshtunnel.tunnel.<identifier>.XXX=` properties. Easiest to explain with an example. In this example the identifier for grouping purposes is _selene_. 
+It's a management component, so everything is configured in bootstrap.properties where your configuration consists of a number of  `sshtunnel.tunnel.<identifier>.XXX=` properties. Easiest to explain with an example. In this example the identifier for grouping purposes is _hammertime_. 
 
 You can of course define multiple identifiers for additional SSH tunnels.
 
