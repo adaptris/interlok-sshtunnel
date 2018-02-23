@@ -25,6 +25,10 @@ sshtunnel.tunnel.hammertime.privateKeyPassword=%env{MY_SECRET_PRIVATEKEY_PASSWOR
 * Your private key is stored in `/path/to/my/privatekey/id_rsa`
 * Your private key password is stored against the environment variable `MY_SECRET_PRIVATEKEY_PASSWORD`
 ** If you leave this undefined, then a java null is used as the password.
+* A tunnel is opened from the local port 3306 -> 10.1.2.3:3306
+* A tunnel is opened from the local port 2506 -> 10.1.2.3:2506
+
+So now you can use `jdbc:mysql://localhost:3306/` even though you haven't got mysql installed locally.
 
 Other settings that you could use
 
