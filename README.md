@@ -12,6 +12,7 @@ It's a management component, so everything is configured in bootstrap.properties
 You can of course define multiple identifiers for additional SSH tunnels.
 
 ```
+managementComponents=jmx:sshtunnel:jetty
 # The default port is 22
 sshtunnel.tunnel.hammertime.host=10.1.2.3:22
 sshtunnel.tunnel.hammertime.tunnel.1=3306:3306
