@@ -1,4 +1,4 @@
-# interlok-sshtunnel
+# interlok-sshtunnel [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0287037a13ba414b903080f2654c605a)](https://www.codacy.com/app/adaptris/interlok-sshtunnel)
 `friendly-happiness` was the suggested project name
 
 ## Why ![Interlok Hammer](https://img.shields.io/badge/certified-interlok%20hammer-red.svg)
