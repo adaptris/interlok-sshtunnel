@@ -51,6 +51,7 @@ public class SshTunnelConfigBuilderTest {
     assertNull(first.getPassword());
     assertNotNull(first.buildProxy());
     assertEquals(90, first.getKeepAliveSeconds());
+    assertEquals(12, first.getConnectTimeoutSeconds());
 
     TunnelConfig second = cfgs.get(1);
     assertEquals("192.168.1.2:22", second.getHost());
@@ -60,6 +61,7 @@ public class SshTunnelConfigBuilderTest {
     assertNull(second.getPrivateKeyPassword());
     assertEquals("MyUserPassword", second.getPassword());
     assertEquals(60, second.getKeepAliveSeconds());
+    assertEquals(12, second.getConnectTimeoutSeconds());
     assertNull(second.buildProxy());
 
   }
@@ -84,6 +86,7 @@ public class SshTunnelConfigBuilderTest {
     config.setProperty("sshtunnel.tunnel.myIdentifier.proxy", "192.168.1.1:3128");
     config.setProperty("sshtunnel.tunnel.myIdentifier.proxy.user", "proxyUser");
     config.setProperty("sshtunnel.tunnel.myIdentifier.proxy.password", "proxyPassword");
+    config.setProperty("sshtunnel.connect.timeout.seconds", "12");
     return config;
   }
 }

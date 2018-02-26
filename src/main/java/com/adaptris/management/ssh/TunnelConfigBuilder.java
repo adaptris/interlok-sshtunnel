@@ -38,6 +38,7 @@ public class TunnelConfigBuilder {
   public static final String SSHTUNNEL_PROXY = "sshtunnel.tunnel.%s.proxy";
   public static final String SSHTUNNEL_PROXY_USER = "sshtunnel.tunnel.%s.proxy.user";
   public static final String SSHTUNNEL_PROXY_PASSWORD = "sshtunnel.tunnel.%s.proxy.password";
+  public static final String SSHTUNNEL_CONNECT_TIMEOUT = "sshtunnel.connect.timeout.seconds";
   
   private static final String SSHTUNNEL_IDENTIFIER_REGEX = "^sshtunnel\\.tunnel\\.(.*)\\.host$";
 
@@ -91,6 +92,12 @@ public class TunnelConfigBuilder {
       @Override
       void add(String identifier, Map<String, String> config, TunnelConfig existing) {
         existing.setKeepAliveSeconds(config.get(String.format(SSHTUNNEL_KEEP_ALIVE, identifier)));
+      }
+    },
+    ConnectTimeout {
+      @Override
+      void add(String identifier, Map<String, String> config, TunnelConfig existing) {
+        existing.setConnectTimeoutSeconds(config.get(SSHTUNNEL_CONNECT_TIMEOUT));
       }
     },
     Proxy {

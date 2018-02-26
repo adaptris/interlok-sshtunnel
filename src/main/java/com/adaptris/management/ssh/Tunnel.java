@@ -66,7 +66,7 @@ class Tunnel {
   public Tunnel start() throws Exception {
     for (String s : config.getTunnels()) {
       LocalRemotePortPair ports = new LocalRemotePortPair(s);
-      log.trace("Creating Tunnel : localPort {} -> {}:{}", ports.getLocalPort(), "localhost", ports.getRemotePort());
+      log.trace("Creating Tunnel : localPort {} -> remote {}", ports.getLocalPort(), ports.getRemotePort());
       session.setPortForwardingL(ports.getLocalPort(), "localhost", ports.getRemotePort());
     }
     return this;
