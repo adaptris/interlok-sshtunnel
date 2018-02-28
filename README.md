@@ -20,16 +20,30 @@ sshtunnel.tunnel.hammertime.tunnel.2=2506:2506
 sshtunnel.tunnel.hammertime.user=trex
 sshtunnel.tunnel.hammertime.privateKey=/path/to/my/privatekey/id_rsa
 sshtunnel.tunnel.hammertime.privateKeyPassword=%env{MY_SECRET_PRIVATEKEY_PASSWORD}
+
+sshtunnel.tunnel.cant-touch-this.host=192.168.1.1
+sshtunnel.tunnel.cant-touch-this.tunnel.1=61616:61616
+sshtunnel.tunnel.cant-touch-this.tunnel.2=5432:5432
+sshtunnel.tunnel.cant-touch-this.user=sburrell
+sshtunnel.tunnel.cant-touch-this.privateKey=/path/to/my/privatekey/id_rsa
+sshtunnel.tunnel.cant-touch-this.privateKeyPassword=%sysprop{my.secret.password}
+
 ```
 
 * You connect to 10.1.2.3:22 as the user _trex_. 
-* Your private key is stored in `/path/to/my/privatekey/id_rsa`
-* Your private key password is stored against the environment variable `MY_SECRET_PRIVATEKEY_PASSWORD`
+    * Your private key is stored in `/path/to/my/privatekey/id_rsa`
+    * Your private key password is stored against the environment variable `MY_SECRET_PRIVATEKEY_PASSWORD`
     * If you leave this undefined, then a java null is used as the password.
 * A tunnel is opened from the local port 3306 -> 10.1.2.3:3306
 * A tunnel is opened from the local port 2506 -> 10.1.2.3:2506
+* You connect to 192.168.1.1 as the user _sburrell_
+    * Your private key is stored in `/path/to/my/privatekey/id_rsa`
+    * Your private key password is stored against the system property `my.secret.password`
+* A tunnel is opened from the local port 61616 -> 192.168.1.1:61616
+* A tunnel is opened from the local port 5432 -> 192.168.1.1:5432
 
-So now you can use `jdbc:mysql://localhost:3306/` even though you haven't got mysql installed locally.
+
+So now you can use `jdbc:mysql://localhost:3306/` even though you haven't got mysql installed locally, and similarly `tcp://localhost:61616` for activemq...
 
 Other settings that you could use
 
