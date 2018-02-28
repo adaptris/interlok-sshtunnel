@@ -1,4 +1,4 @@
-# interlok-sshtunnel [![Build Status](https://travis-ci.org/adaptris/interlok-sshtunnel.svg?branch=develop)](https://travis-ci.org/adaptris/interlok-sshtunnel) [![codecov](https://codecov.io/gh/adaptris/interlok-sshtunnel/branch/develop/graph/badge.svg)](https://codecov.io/gh/adaptris/interlok-sshtunnel) ![Jenkins coverage](https://img.shields.io/jenkins/t/https/development.adaptris.net/jenkins/job/Interlok-SSHTunnel.svg) ![license](https://img.shields.io/github/license/adaptris/interlok-sshtunnel.svg) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0287037a13ba414b903080f2654c605a)](https://www.codacy.com/app/adaptris/interlok-sshtunnel)
+# interlok-sshtunnel [![GitHub tag](https://img.shields.io/github/tag/adaptris/interlok-sshtunnel.svg)](https://github.com/adaptris/interlok-sshtunnel/tags) [![Build Status](https://travis-ci.org/adaptris/interlok-sshtunnel.svg?branch=develop)](https://travis-ci.org/adaptris/interlok-sshtunnel) [![codecov](https://codecov.io/gh/adaptris/interlok-sshtunnel/branch/develop/graph/badge.svg)](https://codecov.io/gh/adaptris/interlok-sshtunnel) ![Jenkins coverage](https://img.shields.io/jenkins/t/https/development.adaptris.net/jenkins/job/Interlok-SSHTunnel.svg) ![license](https://img.shields.io/github/license/adaptris/interlok-sshtunnel.svg) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0287037a13ba414b903080f2654c605a)](https://www.codacy.com/app/adaptris/interlok-sshtunnel)
 
 `friendly-happiness` was the suggested project name
 
@@ -29,7 +29,7 @@ sshtunnel.tunnel.cant-touch-this.privateKeyPassword=%sysprop{my.secret.password}
 
 ```
 
-* You connect to 10.1.2.3:22 as the user _trex_. 
+* You connect to 10.1.2.3:22 as the user _trex_.
     * Your private key is stored in `/path/to/my/privatekey/id_rsa`
     * Your private key password is stored against the environment variable `MY_SECRET_PRIVATEKEY_PASSWORD`
     * If you leave this undefined, then a java null is used as the password.
