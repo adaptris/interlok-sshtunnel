@@ -18,6 +18,11 @@ package com.adaptris.management.ssh;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
+import java.util.Collections;
+import java.util.Set;
+import java.util.WeakHashMap;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.math.NumberUtils;
@@ -40,13 +45,34 @@ class Tunnel {
 
   private transient JSch jsch;
   private transient Session session;
+  private transient ScheduledExecutorService executor;
+  private transient Set<ScheduledFuture> tunnelMonitors = Collections.newSetFromMap(new WeakHashMap<ScheduledFuture, Boolean>());
 
-  public Tunnel(TunnelConfig config) throws Exception {
+  public Tunnel(TunnelConfig config, ScheduledExecutorService exec) throws Exception {
     this.config = config;
+    this.executor = exec;
     jsch = addIdentity(new JSch(), config);
   }
 
   public Tunnel connect() throws Exception {
+    _connect();
+    return this;
+  }
+
+  public Tunnel start() throws Exception {
+    _start();
+    return this;
+  }
+
+  public Tunnel stop() throws Exception {
+    for (ScheduledFuture f : tunnelMonitors) {
+      f.cancel(true);
+    }
+    _stopQuietly();
+    return this;
+  }
+
+  private void _connect() throws Exception {
     HostPortPair host = new HostPortPair(config.getHost());
     log.trace("Trying to connect to {}:{} as {}", host.getHost(), host.getPort(), config.getUser());
     session = jsch.getSession(config.getUser(), host.getHost(), host.getPort());
@@ -55,32 +81,64 @@ class Tunnel {
     session.setServerAliveInterval(Long.valueOf(TimeUnit.SECONDS.toMillis(config.getKeepAliveSeconds())).intValue());
     session.setConfig(SSH_PREFERRED_AUTHENTICATIONS, NO_KERBEROS_AUTH);
     session.setUserInfo(new StaticPassword(Password.decode(ExternalResolver.resolve(config.getPassword()))));
-
     int connectTimeout = Long.valueOf(TimeUnit.SECONDS.toMillis(config.getConnectTimeoutSeconds())).intValue();
     session.connect(connectTimeout);
     log.trace("Connected to {}:{} as {}", host.getHost(), host.getPort(), config.getUser());
-
-    return this;
   }
 
-  public Tunnel start() throws Exception {
+  private void _start() throws Exception {
     for (String s : config.getTunnels()) {
       LocalRemotePortPair ports = new LocalRemotePortPair(s);
       log.trace("Creating Tunnel : localPort {} -> remote {}", ports.getLocalPort(), ports.getRemotePort());
       session.setPortForwardingL(ports.getLocalPort(), "localhost", ports.getRemotePort());
     }
-    return this;
+    scheduleNextRun(new TunnelMonitor());
   }
 
-  public Tunnel stop() throws Exception {
-    if (session != null) {
-      session.disconnect();
-      log.trace("Disconnected from {}", config.getHost());
-      session = null;
+  private void _stopQuietly() {
+    try {
+      if (session != null) {
+        session.disconnect();
+        log.trace("Disconnected from {}", config.getHost());
+        session = null;
+      }
+    } catch (Exception ignored) {
+
     }
-    return this;
   }
 
+  private void scheduleNextRun(Runnable r) {
+    tunnelMonitors.add(executor.schedule(r, 60, TimeUnit.SECONDS));
+  }
+
+  private class TunnelMonitor implements Runnable {
+
+    @Override
+    public void run() {
+      if (session.isConnected()) {
+        scheduleNextRun(this);
+      } else {
+        log.warn("Tunnel is/was disconnected; attempting restart");
+        scheduleNextRun(new TunnelRetry());
+      }
+    }
+  }
+
+  private class TunnelRetry implements Runnable {
+
+    @Override
+    public void run() {
+      try {
+        _connect();
+        _start();
+      } catch (Exception e) {
+        log.trace("Failed to reconnect tunnel, scheduling retry");
+        _stopQuietly();
+        scheduleNextRun(this);
+      }
+    }
+  }
+  
   private static JSch addIdentity(JSch jsch, TunnelConfig config) throws Exception {
     if (!isBlank(config.getPrivateKeyFile())) {
       String pw = ExternalResolver.resolve(config.getPrivateKeyPassword());

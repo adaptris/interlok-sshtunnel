@@ -16,20 +16,30 @@
 package com.adaptris.management.ssh;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adaptris.core.management.ManagementComponent;
+import com.adaptris.core.util.ManagedThreadFactory;
 import com.adaptris.core.util.PropertyHelper;
+import com.adaptris.util.TimeInterval;
 
 public class SshTunnelComponent implements ManagementComponent {
   private transient Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
+  private static final TimeInterval SHUTDOWN_TIMEOUT_MS = new TimeInterval(60L, TimeUnit.SECONDS);
+
   private transient List<TunnelConfig> tunnelConfigs = new ArrayList<>();;
-  private transient List<Tunnel> tunnels = new ArrayList<>();
+  private transient Set<Tunnel> tunnels = new HashSet<>();
+  private transient ScheduledExecutorService executor;
 
   @Override
   public void setClassLoader(ClassLoader classLoader) {
@@ -38,16 +48,17 @@ public class SshTunnelComponent implements ManagementComponent {
 
   @Override
   public void init(Properties config) throws Exception {
+    executor = Executors.newScheduledThreadPool(1, new ManagedThreadFactory(getClass().getSimpleName()));
     tunnelConfigs = new TunnelConfigBuilder(PropertyHelper.asMap(config)).build();
   }
 
   @Override
   public void start() throws Exception {
-    tunnels = new ArrayList<>();
+    tunnels = new HashSet<>();
     // If you're using the tunnel, then we want to make sure everything
     // is started before actually starting the adapter...
     for (TunnelConfig cfg : tunnelConfigs) {
-      tunnels.add(new Tunnel(cfg).connect().start());
+      tunnels.add(new Tunnel(cfg, executor).connect().start());
     }
   }
 
@@ -56,10 +67,12 @@ public class SshTunnelComponent implements ManagementComponent {
     for (Tunnel t : tunnels) {
       t.stop();
     }
+    ManagedThreadFactory.shutdownQuietly(executor, SHUTDOWN_TIMEOUT_MS);
   }
 
   @Override
   public void destroy() throws Exception {
     tunnels.clear();
   }
+
 }
