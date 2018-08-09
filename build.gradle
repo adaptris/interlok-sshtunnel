@@ -155,6 +155,7 @@ publishing {
       artifact javadocJar { classifier "javadoc" }
 
       pom.withXml {
+        asNode().appendNode("name", componentName)
         asNode().appendNode("description", "Management Component that starts some SSH Tunnels")
         def properties = asNode().appendNode("properties")
         properties.appendNode("target", "3.6.6+")
