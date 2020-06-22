@@ -206,6 +206,8 @@ publishing {
         properties.appendNode("target", "3.6.6+")
         properties.appendNode("license", "false")
         properties.appendNode("tags", "ssh,management,tunnel")
+        properties.appendNode("repository", "https://github.com/adaptris/interlok-sshtunnel")
+        properties.appendNode("readme", "https://github.com/adaptris/interlok-sshtunnel/raw/develop/README.md")
       }
     }
   }
