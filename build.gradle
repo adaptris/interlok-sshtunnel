@@ -207,7 +207,7 @@ publishing {
         properties.appendNode("license", "false")
         properties.appendNode("tags", "ssh,management,tunnel")
         properties.appendNode("repository", "https://github.com/adaptris/interlok-sshtunnel")
-        properties.appendNode("readme", "https://github.com/adaptris/interlok-sshtunnel/develop/README.md")
+        properties.appendNode("readme", "https://github.com/adaptris/interlok-sshtunnel/raw/develop/README.md")
       }
     }
   }
