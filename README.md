@@ -1,6 +1,6 @@
-# interlok-sshtunnel 
+# interlok-sshtunnel
 
-[![GitHub tag](https://img.shields.io/github/tag/adaptris/interlok-sshtunnel.svg)](https://github.com/adaptris/interlok-sshtunnel/tags) [![Build Status](https://travis-ci.org/adaptris/interlok-sshtunnel.svg?branch=develop)](https://travis-ci.org/adaptris/interlok-sshtunnel) [![CircleCI](https://circleci.com/gh/adaptris/interlok-sshtunnel/tree/develop.svg?style=svg)](https://circleci.com/gh/adaptris/interlok-sshtunnel/tree/develop) [![codecov](https://codecov.io/gh/adaptris/interlok-sshtunnel/branch/develop/graph/badge.svg)](https://codecov.io/gh/adaptris/interlok-sshtunnel) ![Jenkins coverage](https://img.shields.io/jenkins/t/https/development.adaptris.net/jenkins/job/Interlok-SSHTunnel.svg) ![license](https://img.shields.io/github/license/adaptris/interlok-sshtunnel.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/adaptris/interlok-sshtunnel.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/adaptris/interlok-sshtunnel/alerts/) [![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/adaptris/interlok-sshtunnel.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/adaptris/interlok-sshtunnel/context:java)
+[![GitHub tag](https://img.shields.io/github/tag/adaptris/interlok-sshtunnel.svg)](https://github.com/adaptris/interlok-sshtunnel/tags) [![codecov](https://codecov.io/gh/adaptris/interlok-sshtunnel/branch/develop/graph/badge.svg)](https://codecov.io/gh/adaptris/interlok-sshtunnel) ![Jenkins coverage](https://img.shields.io/jenkins/t/https/development.adaptris.net/jenkins/job/Interlok-SSHTunnel.svg) ![license](https://img.shields.io/github/license/adaptris/interlok-sshtunnel.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/adaptris/interlok-sshtunnel.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/adaptris/interlok-sshtunnel/alerts/) [![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/adaptris/interlok-sshtunnel.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/adaptris/interlok-sshtunnel/context:java)
 
 `friendly-happiness` was the suggested project name
 
@@ -59,4 +59,3 @@ sshtunnel.tunnel.hammertime.proxy.password=PW:XXXX or %env{PASSWORD} or %sysprop
 * _password_ : If you're using private keys, then you won't need this.
 * _keepAlive.seconds_ : The default is 60 seconds.
 * _proxy*_ : We include support for HTTP proxies because if you need to tunnel, then you probably need to proxy...
-
