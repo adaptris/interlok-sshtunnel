@@ -102,7 +102,7 @@ dependencies {
   compile ("com.adaptris:interlok-core:$interlokCoreVersion") { changing= true}
   compile ("com.adaptris:interlok-common:$interlokCoreVersion") { changing= true}
   compile ("org.slf4j:slf4j-api:$slf4jVersion")
-  compile ("com.github.mwiede:jsch:0.1.62")
+  compile ("com.github.mwiede:jsch:0.1.63")
   annotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion") { changing= true}
 
   testCompile ('junit:junit:4.13.2')
