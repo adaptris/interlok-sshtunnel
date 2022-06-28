@@ -5,13 +5,13 @@ plugins {
   id 'jacoco'
   // Manage optional dependencies in maven pom.
   id 'nebula.optional-base' version '7.0.0'
-  id 'com.github.spotbugs' version '5.0.5'
-  id 'org.owasp.dependencycheck' version '6.5.3'
+  id 'com.github.spotbugs' version '5.0.7'
+  id 'org.owasp.dependencycheck' version '7.1.0.1'
 }
 
 ext {
-  interlokCoreVersion = project.findProperty('interlokCoreVersion') ?: '4.4-SNAPSHOT'
-  releaseVersion = project.findProperty('releaseVersion') ?: '4.4-SNAPSHOT'
+  interlokCoreVersion = project.findProperty('interlokCoreVersion') ?: '4.5-SNAPSHOT'
+  releaseVersion = project.findProperty('releaseVersion') ?: '4.5-SNAPSHOT'
   nexusBaseUrl = project.findProperty('nexusBaseUrl') ?: 'https://nexus.adaptris.net/nexus'
   mavenPublishUrl = project.findProperty('mavenPublishUrl') ?: nexusBaseUrl + '/content/repositories/snapshots'
   javadocsBaseUrl = nexusBaseUrl + "/content/sites/javadocs/com/adaptris"
@@ -27,7 +27,7 @@ ext {
 
   organizationName = "Adaptris Ltd"
   organizationUrl = "http://interlok.adaptris.net"
-  slf4jVersion = '1.7.35'
+  slf4jVersion = '1.7.36'
 }
 
 ext.gitBranchNameOrTimestamp = { branchName ->
@@ -114,7 +114,7 @@ dependencies {
   api ("com.adaptris:interlok-core:$interlokCoreVersion") { changing= true}
   api ("com.adaptris:interlok-common:$interlokCoreVersion") { changing= true}
   implementation ("org.slf4j:slf4j-api:$slf4jVersion")
-  api ("com.github.mwiede:jsch:0.1.72")
+  api ("com.github.mwiede:jsch:0.2.1")
   annotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion") { changing= true}
 
   testImplementation ('junit:junit:4.13.2')
