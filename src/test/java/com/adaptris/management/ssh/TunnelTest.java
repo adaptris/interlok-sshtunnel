@@ -16,22 +16,23 @@
 
 package com.adaptris.management.ssh;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TunnelTest {
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
   }
 
@@ -45,25 +46,27 @@ public class TunnelTest {
     assertEquals(4444, pair.getPort());
   }
 
-  @Test(expected = NumberFormatException.class)
+  @Test
   public void testLocalRemotePortPair() {
-    Tunnel.LocalRemotePortPair pair = new Tunnel.LocalRemotePortPair("4444:5555");
-    assertEquals(4444, pair.getLocalPort());
-    assertEquals(5555, pair.getRemotePort());
-    pair = new Tunnel.LocalRemotePortPair("localhost");
-    try {
-      pair.getLocalPort();
-      fail();
-    } catch (IllegalArgumentException expected) {
+    assertThrows(NumberFormatException.class, ()->{
+      Tunnel.LocalRemotePortPair pair = new Tunnel.LocalRemotePortPair("4444:5555");
+      assertEquals(4444, pair.getLocalPort());
+      assertEquals(5555, pair.getRemotePort());
+      pair = new Tunnel.LocalRemotePortPair("localhost");
+      try {
+        pair.getLocalPort();
+        fail();
+      } catch (IllegalArgumentException expected) {
 
-    }
-    try {
-      pair.getRemotePort();
-      fail();
-    } catch (IllegalArgumentException expected) {
+      }
+      try {
+        pair.getRemotePort();
+        fail();
+      } catch (IllegalArgumentException expected) {
 
-    }
-    new Tunnel.LocalRemotePortPair("localhost:localhost");
+      }
+      new Tunnel.LocalRemotePortPair("localhost:localhost");
+    }, "Failed with invalid port number");
   }
 
   @Test
