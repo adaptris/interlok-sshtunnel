@@ -1,12 +1,12 @@
 /*
  * Copyright 2018 Adaptris Ltd.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -39,7 +39,7 @@ public class TunnelConfigBuilder {
   public static final String SSHTUNNEL_PROXY_USER = "sshtunnel.tunnel.%s.proxy.user";
   public static final String SSHTUNNEL_PROXY_PASSWORD = "sshtunnel.tunnel.%s.proxy.password";
   public static final String SSHTUNNEL_CONNECT_TIMEOUT = "sshtunnel.connect.timeout.seconds";
-  
+
   private static final String SSHTUNNEL_IDENTIFIER_REGEX = "^sshtunnel\\.tunnel\\.(.*)\\.host$";
 
   private transient Pattern pattern = Pattern.compile(SSHTUNNEL_IDENTIFIER_REGEX);
@@ -55,7 +55,7 @@ public class TunnelConfigBuilder {
       void add(String identifier, Map<String, String> config, TunnelConfig existing) {
         existing.setHost(config.get(String.format(SSHTUNNEL_HOST, identifier)));
       }
-      
+
     },
     Tunnels {
       @Override
@@ -104,10 +104,10 @@ public class TunnelConfigBuilder {
       @Override
       void add(String identifier, Map<String, String> config, TunnelConfig existing) {
         existing.setProxy(config.get(String.format(SSHTUNNEL_PROXY, identifier)),
-            config.get(String.format(SSHTUNNEL_PROXY_USER, identifier)),
-            config.get(String.format(SSHTUNNEL_PROXY_PASSWORD, identifier)));
+            config.get(String.format(SSHTUNNEL_PROXY_USER, identifier)), config.get(String.format(SSHTUNNEL_PROXY_PASSWORD, identifier)));
       }
     };
+
     abstract void add(String identifier, Map<String, String> config, TunnelConfig existing);
 
   }
@@ -122,7 +122,7 @@ public class TunnelConfigBuilder {
   }
 
   private void buildIdentifiers() {
-    identifiers = new TreeSet<String>();
+    identifiers = new TreeSet<>();
     for (String s : config.keySet()) {
       Matcher m = pattern.matcher(s);
       if (m.matches()) {

@@ -1,12 +1,12 @@
 /*
  * Copyright 2018 Adaptris Ltd.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -141,7 +141,7 @@ public class TunnelConfig {
   }
 
   public void setPrivateKeyFile(String key) {
-    this.privateKeyFile = key;
+    privateKeyFile = key;
   }
 
   public String getPrivateKeyPassword() {
@@ -165,7 +165,7 @@ public class TunnelConfig {
   }
 
   public void setKeepAliveSeconds(String keepAlive) {
-    this.keepAliveSeconds = NumberUtils.toLong(keepAlive, DEFAULT_KEEPALIVE);
+    keepAliveSeconds = NumberUtils.toLong(keepAlive, DEFAULT_KEEPALIVE);
   }
 
   public long getConnectTimeoutSeconds() {
@@ -173,13 +173,13 @@ public class TunnelConfig {
   }
 
   public void setConnectTimeoutSeconds(String timeout) {
-    this.connectTimeoutSeconds = NumberUtils.toLong(timeout, DEFAULT_CONNECT_TIMEOUT);
+    connectTimeoutSeconds = NumberUtils.toLong(timeout, DEFAULT_CONNECT_TIMEOUT);
   }
 
   public void setProxy(String proxy, String user, String password) {
     this.proxy = proxy;
-    this.proxyUser = user;
-    this.proxyPassword = password;
+    proxyUser = user;
+    proxyPassword = password;
   }
 
 }
