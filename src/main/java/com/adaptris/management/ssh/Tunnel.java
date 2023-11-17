@@ -1,12 +1,12 @@
 /*
  * Copyright 2018 Adaptris Ltd.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -46,11 +46,11 @@ class Tunnel {
   private transient JSch jsch;
   private transient Session session;
   private transient ScheduledExecutorService executor;
-  private transient Set<ScheduledFuture> tunnelMonitors = Collections.newSetFromMap(new WeakHashMap<ScheduledFuture, Boolean>());
+  private transient Set<ScheduledFuture<?>> tunnelMonitors = Collections.newSetFromMap(new WeakHashMap<ScheduledFuture<?>, Boolean>());
 
   public Tunnel(TunnelConfig config, ScheduledExecutorService exec) throws Exception {
     this.config = config;
-    this.executor = exec;
+    executor = exec;
     jsch = addIdentity(new JSch(), config);
   }
 
@@ -65,7 +65,7 @@ class Tunnel {
   }
 
   public Tunnel stop() throws Exception {
-    for (ScheduledFuture f : tunnelMonitors) {
+    for (ScheduledFuture<?> f : tunnelMonitors) {
       f.cancel(true);
     }
     _stopQuietly();
@@ -138,7 +138,7 @@ class Tunnel {
       }
     }
   }
-  
+
   private static JSch addIdentity(JSch jsch, TunnelConfig config) throws Exception {
     if (!isBlank(config.getPrivateKeyFile())) {
       String pw = ExternalResolver.resolve(config.getPrivateKeyPassword());
@@ -237,4 +237,5 @@ class Tunnel {
       log.trace(message);
     }
   }
+
 }
