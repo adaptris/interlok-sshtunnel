@@ -114,7 +114,7 @@ dependencies {
   api ("com.adaptris:interlok-core:$interlokCoreVersion") { changing= true}
   api ("com.adaptris:interlok-common:$interlokCoreVersion") { changing= true}
   implementation ("org.slf4j:slf4j-api:$slf4jVersion")
-  api ("com.github.mwiede:jsch:0.2.14")
+  api ("com.github.mwiede:jsch:0.2.15")
   annotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion") { changing= true}
 
   testImplementation ('junit:junit:4.13.2')
